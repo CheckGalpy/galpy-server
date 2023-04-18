@@ -35,3 +35,39 @@ exports.signInUser = async function (req, res, next) {
   }
 };
 
+exports.verifyUser = async function (req, res, next) {
+  const { authorization, refresh } = req.headers;
+
+  const accessToken = authorization.replace("Bearer ", "");
+  const authResponse = {};
+
+  try {
+    const accessTokenDecoded = jwt.verify(accessToken, accessTokenSecret);
+
+    authResponse["authStatus"] = "authorized";
+    authResponse["userId"] = accessTokenDecoded._id;
+  } catch (err) {
+    try {
+      const refreshTokenDecoded = jwt.verify(refresh, refreshTokenSecret);
+      const payload = {
+        _id: refreshTokenDecoded._id,
+        email: refreshTokenDecoded.email,
+      };
+
+      const accessToken = jwt.sign(payload, accessTokenSecret, {
+        expiresIn: "1m",
+      });
+
+      authResponse["authStatus"] = "refreshed";
+      authResponse["token"] = {
+        accessToken: accessToken,
+        refreshToken: refresh,
+      };
+      authResponse["userId"] = refreshTokenDecoded._id;
+    } catch {
+      authResponse["authStatus"] = "expired";
+    }
+  }
+
+  return res.json(authResponse);
+};
