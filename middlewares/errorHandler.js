@@ -1,10 +1,10 @@
-function handle404Error(req, res, next) {
+function handle404NotFound(req, res, next) {
   const err = new Error("Not Found: 해당 페이지를 찾을 수 없습니다.");
   err.status = 404;
   next(err);
 }
 
-function handleOtherErrors(err, req, res, next) {
+function handleErrors(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
@@ -20,6 +20,6 @@ function handleOtherErrors(err, req, res, next) {
 }
 
 module.exports = {
-  handle404Error,
-  handleOtherErrors,
+  handle404NotFound,
+  handleErrors,
 };
