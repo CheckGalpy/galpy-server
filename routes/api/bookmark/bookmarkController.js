@@ -29,3 +29,20 @@ exports.getBookmark = async function (req, res, next) {
   }
 };
 
+exports.updateBookmark = async function (req, res, next) {
+  const { bookmarkId } = req.params;
+  const updatedBookmark = req.body;
+
+  try {
+    const bookmark = await Bookmark.findByIdAndUpdate(
+      bookmarkId,
+      { $set: updatedBookmark },
+      { new: true },
+    );
+
+    res.status(200).json(bookmark);
+  } catch (error) {
+    next(error);
+  }
+};
+
