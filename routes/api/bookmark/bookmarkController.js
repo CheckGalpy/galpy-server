@@ -57,3 +57,13 @@ exports.updateBookmark = async function (req, res, next) {
   }
 };
 
+exports.deleteBookmark = async function (req, res, next) {
+  const { bookmarkId } = req.params;
+
+  try {
+    const bookmark = await Bookmark.findByIdAndDelete(bookmarkId);
+    res.status(204).json(bookmark);
+  } catch (error) {
+    next(error);
+  }
+};
