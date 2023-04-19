@@ -18,3 +18,14 @@ exports.createBookmark = async function (req, res, next) {
   }
 };
 
+exports.getBookmark = async function (req, res, next) {
+  const { bookmarkId } = req.params;
+
+  try {
+    const bookmark = await Bookmark.findById(bookmarkId);
+    res.status(200).json(bookmark);
+  } catch (error) {
+    next(error);
+  }
+};
+
