@@ -1,5 +1,16 @@
 const Follow = require("../../../models/Follow");
 
+exports.follow = async (req, res) => {
+  const { followerId, followeeId } = req.body;
+
+  try {
+    await Follow.create({ followerId, followeeId });
+    res.status(201).json({ message: "성공적으로 팔로우 하였습니다." });
+  } catch (error) {
+    res.status(500).json({ message: "팔로우에 실패하였습니다.", error });
+  }
+};
+
 exports.getFollowingList = async function (req, res, next) {
   const { userId } = req.params;
 
