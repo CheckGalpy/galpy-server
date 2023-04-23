@@ -11,6 +11,17 @@ exports.follow = async (req, res) => {
   }
 };
 
+exports.unfollow = async (req, res) => {
+  const { followerId, followeeId } = req.body;
+
+  try {
+    await Follow.deleteOne({ followerId, followeeId });
+    res.status(200).json({ message: "성공적으로 언팔로우 되었습니다" });
+  } catch (error) {
+    res.status(500).json({ message: "언팔로우에 실패했습니다: ", error });
+  }
+};
+
 exports.getFollowingList = async function (req, res, next) {
   const { userId } = req.params;
 
