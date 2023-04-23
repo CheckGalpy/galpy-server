@@ -22,10 +22,10 @@ exports.getBookmarkListByCreatorId = async function (req, res, next) {
   const creatorId = req.query.creatorId;
 
   try {
-    const bookmarks = await Bookmark.find({ creatorId });
-    res.status(200).json(bookmarks);
-  } catch (err) {
-    next(err);
+    const bookmark = await Bookmark.find({ creatorId });
+    res.status(200).json(bookmark);
+  } catch (error) {
+    next(error);
   }
 };
 

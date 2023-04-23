@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const bookmarkSchema = new mongoose.Schema({
   creatorId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },

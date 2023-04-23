@@ -11,12 +11,12 @@ function handleErrors(err, req, res, next) {
   res.status(err.status || 500);
 
   if (err.status === 500) {
-    return res.render("error", {
+    return res.json({
       message: "서버 내부에 문제가 발생했습니다",
       error: { status: err.status },
     });
   }
-  res.render("error", { message: err.message });
+  res.json({ message: err.message });
 }
 
 module.exports = {
