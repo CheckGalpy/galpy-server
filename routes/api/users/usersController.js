@@ -24,19 +24,14 @@ exports.searchUser = async function (req, res, next) {
     const targetUsersFollowingStatus = {};
 
     for (const targetUser of targetUsers) {
-      console.log(currentUserId, targetUser._id);
-
       const existingFollow = await Follow.findOne({
         followerId: currentUserId,
         followeeId: targetUser._id,
       });
 
-      console.log(existingFollow);
-
       targetUsersFollowingStatus[targetUser._id] = !!existingFollow;
     }
 
-    console.log(targetUsersFollowingStatus);
     res.status(200).json({ targetUsers, targetUsersFollowingStatus });
   } catch (error) {
     res.status(500).json({

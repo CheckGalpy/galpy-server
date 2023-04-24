@@ -13,7 +13,6 @@ exports.follow = async (req, res) => {
 
 exports.unfollow = async (req, res) => {
   const { followerId, followeeId } = req.body;
-
   try {
     await Follow.deleteOne({ followerId, followeeId });
     res.status(200).json({ message: "성공적으로 언팔로우 되었습니다" });
