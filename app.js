@@ -5,6 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
+const startCronJob = require("./tasks/updateSimilarity");
 const apiRouter = require("./routes/api/apiRouter");
 const {
   handle404NotFound,
@@ -19,5 +20,7 @@ app.use("/api", apiRouter);
 
 app.use(handle404NotFound);
 app.use(handleErrors);
+
+startCronJob();
 
 module.exports = app;
