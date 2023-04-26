@@ -34,3 +34,14 @@ exports.getFollowingList = async function (req, res, next) {
     res.status(500).json({ error: "팔로잉 목록을 가져오는데 실패하였습니다." });
   }
 };
+
+exports.getFollowerList = async function (req, res, next) {
+  const { userId } = req.params;
+
+  try {
+    const follower = await Follow.find({ followeeId: userId });
+    res.status(200).json(follower);
+  } catch (error) {
+    res.status(500).json({ error: "팔로워 목록을 가져오는데 실패하였습니다." });
+  }
+};
